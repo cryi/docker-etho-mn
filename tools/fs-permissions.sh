@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#  ETHER-1 Master Node/Master Node docker template
+#  ETHER-1 Master Node docker template
 #  Copyright © 2019 cryon.io
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ BASEDIR=$(dirname "$0")
 
 INNER_UID=10000
 target_uid=$(grep "dockremap" /etc/subuid)
-target_uid=$(echo $target_uid | cut -d ":" -f 2)
+target_uid=$(echo "$target_uid" | cut -d ":" -f 2)
 INNER_UID=$(($target_uid + $INNER_UID))
 
 DIRS=\
@@ -36,5 +36,5 @@ for row in $(echo "$DIRS" | jq -r '.writable[]'); do
     echo "Setting permission for path: $BASEDIR/../$row"
     chown -R $INNER_UID:$INNER_UID "$BASEDIR/../$row" && echo "Access permission to '$row' set to uid $INNER_UID."
 done
-chmod +x "$BASEDIR/*.sh"
+chmod +x "$BASEDIR/"*.sh
 exit $?

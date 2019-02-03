@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#  ETHER-1 Master Node/Master Node docker template
+#  ETHER-1 Master Node docker template
 #  Copyright © 2019 cryon.io
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 #  Contact: cryi@tutanota.com
-
-platform=$(uname -m)
 
 ver=$(curl -L -s https://api.ether1.org/mn/versions.json | jq '.mn.stable' --raw-output)
 

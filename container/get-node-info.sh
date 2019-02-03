@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#  ETHER-1 Master Node/Master Node docker template
+#  ETHER-1 Master Node docker template
 #  Copyright © 2019 cryon.io
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@ ver=$(./get-version.sh)
 type="ETHO_MN"
 
 printf "\
-TYPE: $type \n\
-VERSION: $ver \n\
-" > /home/etho/.ether1/node.info
+TYPE: %s \n\
+VERSION: %s \n\
+" "$type" "$ver" > /home/etho/.ether1/node.info
 
 printf "\
-TYPE: $type \n\
-VERSION: $ver \n\
-"
+TYPE: %s \n\
+VERSION: %s \n\
+" "$type" "$ver" 

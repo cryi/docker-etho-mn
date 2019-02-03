@@ -15,10 +15,11 @@ ETHO Donations: `0x46Ff451710Dd245040098c2F308CA55A373ff2cE`
 
 (If you run on VPS provider, which uses OpenVZ, setup requires at OpenVZ 7)
 
-## Setup AMS (Automated masternode setup - recommended)
+## Setup AMS (AUTONOMOUS MASTERNODE SYSTEM - recommended)
 
-1. 1. `git clone "https://github.com/cryi/AMS.git" [path] && cd [path]` # replace path with directory you want to store node in
-   2. `chmod +x ./ams`
+1. - `git clone "https://github.com/cryi/AMS.git" [path] && cd [path] && chmod +x ./ams` # replace path with directory you want to store node in
+   or 
+   - `wget https://github.com/cryi/AMS/archive/master.zip && unzip -o master.zip && mv ./AMS-master [path] && cd [path] && chmod +x ./ams`
 2. one of commands below depending of your preference (run as *root* or use *sudo*)
     - `./ams --full --node=ETHO_SN` # full setup of Ether1 SN/MN for current user
     - `./ams --full --user=[user] --node=ETHO_SN --auto-update-level=[level]` # full setup of Ether1 SN/MN for defined user (directory location and structure is preserved) sets specified auto update level (Refer to Autoupdates)
