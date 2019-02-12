@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#  ETHER-1 Master Node docker template
+#  ETHER-1 Service Node docker template
 #  Copyright © 2019 cryon.io
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -19,18 +19,17 @@
 #  Contact: cryi@tutanota.com
 
 BASEDIR=$(dirname "$0")
-container=$(docker-compose -f "$BASEDIR/../docker-compose.yml" ps -q mn 2> /dev/null)
-TEMPLATE_VERSION=$(jq .version "$BASEDIR/../def.json")
-STATUS="NOT RUNNING"
-if [ -z "$container" ]; then 
-    printf "STATUS: %s\n" "$STATUS"
-    printf "TEMPLATE VERSION: %s\n" "$TEMPLATE_VERSION"
-    exit
-fi
-docker exec "$container" /home/etho/get-node-info.sh
-STATUS=$(docker ps --filter "id=$container" --format "{{.Status}}" --no-trunc 2> /dev/null)
-if [ -z "$STATUS" ]; then
-    STATUS="NOT RUNNING"
-fi
-printf "STATUS: %s\n" "$STATUS"
-printf "TEMPLATE VERSION: %s\n" "$TEMPLATE_VERSION"
+
+PARAM=$(echo "$1" | sed "s/=.*//")
+VALUE=$(echo "$1" | sed "s/[^>]*=//")
+
+case $PARAM in
+    NODE_VERSION) 
+        if grep "NODE_VERSION=" "$BASEDIR/../container/limits.conf"; then
+            TEMP=$(sed "s/NODE_VERSION=.*/NODE_VERSION=$VALUE/g" "$BASEDIR/../container/limits.conf")
+            printf "%s" "$TEMP" > "$BASEDIR/../container/limits.conf"
+        else 
+            printf "NODE_VERSION=%s" "$VALUE" >> "$BASEDIR/../container/limits.conf"
+        fi
+    ;;
+esac

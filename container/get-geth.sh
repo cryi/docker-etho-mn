@@ -18,8 +18,32 @@
 #
 #  Contact: cryi@tutanota.com
 
-ver=$(curl -L -s https://api.ether1.org/mn/versions.json | jq '.mn.stable' --raw-output)
+ver=$(curl -L -s https://api.ether1.org/mn/versions.json | jq '.sn.stable' --raw-output)
+                                      
+URL="https://ether1.org/releases/Ether1-MN-SN-$ver.tar.gz"                         
 
-curl -L "https://ether1.org/releases/Ether1-MN-SN-$ver.tar.gz" -o ./geth-etho.tar.gz
-tar -xzvf geth-etho.tar.gz
-rm -f ./geth-etho.tar.gz
+if [ -f "./limits.conf" ]; then 
+    if grep "NODE_BINARY=" "./limits.conf"; then 
+        NODE_BINARY=$(grep "NODE_BINARY=" "./limits.conf" | sed 's/NODE_BINARY=//g')
+        if [ -n "$NODE_BINARY" ] && [ ! "$NODE_BINARY" = "auto" ]; then
+            URL=$NODE_BINARY
+        fi
+    fi
+fi
+
+FILE=geth-etho
+
+case "$URL" in
+    *.tar.gz) 
+        curl -L "$URL" -o "./$FILE.tar.gz"
+        tar -xzvf "./$FILE.tar.gz"
+        rm -f "./$FILE.tar.gz"
+    ;;
+    *.zip)
+        curl -L "$URL" -o "./$FILE.zip"
+        unzip "./$FILE.zip"
+        rm -f "./$FILE.zip"
+    ;;
+esac
+
+cp -f "$(find . -name geth)" .
